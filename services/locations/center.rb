@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Maps
+module Locations
   class Center
     attr_reader :map
 
