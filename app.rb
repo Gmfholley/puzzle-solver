@@ -141,4 +141,4 @@ Direction.set_all(DIRECTIONS.map{ |attrs| Direction.new(attrs) })
 locations = LOCATIONS.map{|i| Location.new(i) }
 map = Map.new(locations, Direction.all)
 
-cards = Factories::Card.perform(CARDS)
+cards = Factories::Cards.perform(CARDS)
