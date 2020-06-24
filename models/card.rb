@@ -36,4 +36,8 @@ class Card < Occupant
       [dir, edge_on(dir)]
     end.to_h
   end
+
+  def ==(other_obj)
+    Cards::Equal.new(self, other_obj).perform
+  end
 end

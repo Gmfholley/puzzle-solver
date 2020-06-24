@@ -15,4 +15,8 @@ class Edge
   def relative_location(orientation)
     location.relative_location(orientation)
   end
+
+  def ==(other_obj)
+    image == other_obj.image
+  end
 end

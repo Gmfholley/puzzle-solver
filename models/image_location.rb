@@ -8,6 +8,10 @@ class ImageLocation
     @direction ||= Direction.find(name)
   end
 
+  def value
+    direction.value
+  end
+
   def opposite_location
     direction.opposite
   end
