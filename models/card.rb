@@ -5,7 +5,7 @@ class Card
   attr_accessor :location, :orientation
 
   def initialize(args = {})
-    @edges = args[:edges] || []
+    @edges = args[:edges] || []                                 # Edge
     @location = args[:location]                                 # CardLocation
     @orientation = args[:orientation] || Direction.find(:north) # Direction facing ... :north, :south, :east, :west
   end

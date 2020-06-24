@@ -14,7 +14,19 @@ class HalfImage
     image.position != position && image.name == name
   end
 
+  def top?
+    !bottom?
+  end
+
+  def bottom?
+    position == :bottom
+  end
+
   def valid?
     POSITIONS.include? position
+  end
+
+  def ==(other_obj)
+    name == other_obj.name && position == other_obj.position
   end
 end

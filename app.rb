@@ -1,5 +1,8 @@
 Dir[File.join(__dir__, 'models', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'services', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'services/factories', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'services/cards', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'services/maps', '*.rb')].each { |file| require file }
 
 LOCATIONS = [
   {
@@ -138,4 +141,4 @@ Direction.set_all(DIRECTIONS.map{ |attrs| Direction.new(attrs) })
 locations = LOCATIONS.map{|i| Location.new(i) }
 map = Map.new(locations, Direction.all)
 
-cards = CardFactory.perform(CARDS)
+cards = Factories::Card.perform(CARDS)
