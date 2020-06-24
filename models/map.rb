@@ -4,7 +4,7 @@ class Map
   attr_accessor :locations, :directions
   def initialize(locations = [], directions = [])
     @locations = locations
-    locations.each{|loc| loc.map = self }
+    locations.each { |loc| loc.map = self }
     @directions = directions
   end
 
@@ -13,7 +13,7 @@ class Map
   end
 
   def find(x, y)
-    locations.find{|loc| loc.x_pos == x && loc.y_pos == y }
+    locations.find { |loc| loc.x_pos == x && loc.y_pos == y }
   end
 
   def clear(location)

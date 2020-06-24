@@ -2,9 +2,9 @@
 
 module Cards
   # Returns cards compatible with the card in the direction
-  Compatible = Struct.new(:card, :cards, :direction) do
+  Compatible = Struct.new(:card, :cards, :direction) {
     def perform
-      return [] if !card.placed?
+      return [] unless card.placed?
 
       potential_neighbors
     end
@@ -23,5 +23,5 @@ module Cards
     def available_cards
       cards.reject { |card| card.placed? }
     end
-  end
+  }
 end

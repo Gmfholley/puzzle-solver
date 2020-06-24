@@ -34,9 +34,9 @@ class Location
   end
 
   def neighbors
-    directions.map do |dir|
+    directions.map { |dir|
       [dir, find_neighbor(dir)]
-    end.to_h
+    }.to_h
   end
 
   def valid?

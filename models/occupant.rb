@@ -4,7 +4,7 @@ class Occupant
   attr_reader :location, :orientation
 
   def initialize(args = {})
-    @location = args[:location]                                 # Location
+    @location = args[:location] # Location
     @orientation = args[:orientation] || Direction.find(:north) # Direction facing ... :north, :south, :east, :west
   end
 
@@ -24,7 +24,7 @@ class Occupant
   def unoccupied_sides
     return Direction.all unless placed?
 
-    neighbors.compact.select{|k, v| v.unoccupied? }.keys
+    neighbors.compact.select { |k, v| v.unoccupied? }.keys
   end
 
   def neighbors

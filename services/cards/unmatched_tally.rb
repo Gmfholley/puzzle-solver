@@ -2,7 +2,7 @@
 
 module Cards
   # Returns a Hash tally of the number of unmatched top and bottom pairs for all images in the stack of cards
-  UnmatchedTally = Struct.new(:cards) do
+  UnmatchedTally = Struct.new(:cards) {
     def perform
       unmatched_sets_tally
     end
@@ -10,7 +10,7 @@ module Cards
     private
 
     def unmatched_sets_tally
-      image_tally.keys.map {|key| [key, (top_half_tally.fetch(key, 0) - bottom_half_tally.fetch(key, 0)).abs] }.to_h
+      image_tally.keys.map { |key| [key, (top_half_tally.fetch(key, 0) - bottom_half_tally.fetch(key, 0)).abs] }.to_h
     end
 
     # TODO: When ruby 2.7 is stable, use tally Enum feature
@@ -23,15 +23,15 @@ module Cards
     end
 
     def top_half_tally
-      @top_half_tally ||= tally(images.select{ |img| img.top? }.map(&:name))
+      @top_half_tally ||= tally(images.select { |img| img.top? }.map(&:name))
     end
 
     def bottom_half_tally
-      @bottom_half_tally ||= tally(images.select{ |img| img.bottom? }.map(&:name))
+      @bottom_half_tally ||= tally(images.select { |img| img.bottom? }.map(&:name))
     end
 
     def images
       cards.flat_map(&:edges).map(&:image)
     end
-  end
+  }
 end

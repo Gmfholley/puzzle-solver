@@ -1,12 +1,13 @@
 # frozen_string_literal: true
+
 require_relative "occupant"
 
 class Card < Occupant
   attr_reader :edges
-# attr_reader :location, :orientation from Occupant
+  # attr_reader :location, :orientation from Occupant
 
   def initialize(args = {})
-    @edges = args[:edges] || []                                 # Edge
+    @edges = args[:edges] || [] # Edge
     super
   end
 
@@ -22,22 +23,26 @@ class Card < Occupant
   def edge_opposite(direction)
     opposite_location = direction.opposite
 
-    edges.find{|edge|  edge.relative_location(orientation) == opposite_location }
+    edges.find { |edge| edge.relative_location(orientation) == opposite_location }
   end
 
   def edge_on(direction)
-    edges.find{|edge|  edge.relative_location(orientation) == direction }
+    edges.find { |edge| edge.relative_location(orientation) == direction }
   end
 
   def unoccupied_edges
     return edges unless placed?
 
-    unoccupied_sides.map do |dir|
+    unoccupied_sides.map { |dir|
       [dir, edge_on(dir)]
-    end.to_h
+    }.to_h
   end
 
   def ==(other_obj)
     Cards::Equal.new(self, other_obj).perform
+  end
+
+  def to_s
+    [""]
   end
 end

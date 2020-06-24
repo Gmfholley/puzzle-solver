@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Cards
-  Ranked = Struct.new(:card) do
+  Ranked = Struct.new(:card) {
     def points
       @points
     end
@@ -9,5 +9,5 @@ module Cards
     def points=(points)
       @points = points
     end
-  end
+  }
 end

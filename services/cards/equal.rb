@@ -2,7 +2,7 @@
 
 module Cards
   # Returns cards compatible with the card in the direction
-  Equal = Struct.new(:card, :other_card) do
+  Equal = Struct.new(:card, :other_card) {
     def perform
       return false unless same_edges?
 
@@ -30,7 +30,7 @@ module Cards
     end
 
     def equivalent_edges
-      @equivalent_edges ||= card.edges.map {|edge| [edge, other_card.edges.find { |edge| edge == e }] }.to_h
+      @equivalent_edges ||= card.edges.map { |edge| [edge, other_card.edges.find { |edge| edge == e }] }.to_h
     end
-  end
+  }
 end

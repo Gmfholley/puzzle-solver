@@ -12,17 +12,16 @@ class Direction
   end
 
   def self.find(name)
-    all.find{|dir| dir.name == name}
+    all.find { |dir| dir.name == name }
   end
 
   def self.find_by_value(value)
-    all.find{|dir| dir.value == value}
+    all.find { |dir| dir.value == value }
   end
 
   def self.north
     find(:north)
   end
-
 
   def initialize(args = {})
     @name = args[:name]

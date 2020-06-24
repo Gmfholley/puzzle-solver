@@ -11,7 +11,7 @@ module Cards
 
     def perform
       ranked_cards.sort_by { |rc| rc.points }
-                  .map(&:card)
+        .map(&:card)
     end
 
     private
@@ -20,7 +20,7 @@ module Cards
       cards.map do |card|
         rc = Cards::Ranked.new(card)
         images = card.edges.map(&:image)
-        rc.points = images.sum{|i| worst_to_best_image_names.index(i.name) }
+        rc.points = images.sum { |i| worst_to_best_image_names.index(i.name) }
         rc
       end
     end

@@ -4,7 +4,7 @@ class Edge
   attr_reader :image, :location
 
   def initialize(args = {})
-    @image = args[:image]       # HalfImage
+    @image = args[:image] # HalfImage
     @location = args[:location] # ImageLocation
   end
 

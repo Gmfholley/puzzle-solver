@@ -9,7 +9,7 @@ module Locations
     end
 
     def perform
-      map.locations.find{|loc| loc.x_pos == avg_x_pos && loc.y_pos == avg_y_pos }
+      map.locations.find { |loc| loc.x_pos == avg_x_pos && loc.y_pos == avg_y_pos }
     end
 
     private
@@ -29,6 +29,5 @@ module Locations
     def y_positions
       map.locations.map(&:y_pos)
     end
-
   end
 end
