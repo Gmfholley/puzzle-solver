@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Map
-  attr_accessor :locations
+  attr_accessor :locations, :directions
   def initialize(locations = [], directions = [])
     @locations = locations
+    locations.each{|loc| loc.map = self }
     @directions = directions
   end
 
@@ -12,17 +13,18 @@ class Map
   end
 
   def find(x, y)
-    locations.find{|loc| loc.x == x && loc.y == y }
+    locations.find{|loc| loc.x_pos == x && loc.y_pos == y }
   end
 
-  def add_occupant(x, y, occupant, orientation = :north)
-    location = find(x, y)
+  def clear(location)
+    location.occupant.clear
+    location.clear
+  end
 
-    return false if location.nil?
+  def place(location, occupant, orientation)
     return false if location.occupied?
 
-    location.occupant = occupant
-    occupant.orientation = orientation
+    location.place(occupant, orientation)
     true
   end
 end

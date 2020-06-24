@@ -6,13 +6,18 @@ module Cards
     def perform
       return [] if !card.placed?
 
-      ranked_cards.sort_by { |rc| rc.points }.map(&:card)
+      potential_neighbors
     end
 
     private
 
-    def compatible_cards
-
+    def potential_neighbors
+      available_cards.flat_map do |potential_card|
+        Direction.all.select do |potential_direction|
+          potential_card.orientation = potential_direction
+          PotentialNeighbor.new(potential_card, potential_direction) if card.edges_match?(card, direction)
+        end
+      end
     end
 
 

@@ -1,29 +1,31 @@
 # frozen_string_literal: true
+require_relative "occupant"
 
-class Card
+class Card < Occupant
   attr_reader :edges
-  attr_accessor :location, :orientation
+# attr_reader :location, :orientation from Occupant
 
   def initialize(args = {})
     @edges = args[:edges] || []                                 # Edge
-    @location = args[:location]                                 # CardLocation
-    @orientation = args[:orientation] || Direction.find(:north) # Direction facing ... :north, :south, :east, :west
+    super
   end
 
+  # :clear, :neighbors, :unoccupied_sides are methods from Occupant
+
   def edges_match?(card, direction = Direction.find(:north))
-    card_edge = card.opposite_edge_for(direction)
-    edge = edge_for(direction)
+    card_edge = card.edge_opposite(direction)
+    edge = edge_on(direction)
 
     edge.matches? card_edge
   end
 
-  def opposite_edge_for(direction)
+  def edge_opposite(direction)
     opposite_location = direction.opposite
 
     edges.find{|edge|  edge.relative_location(orientation) == opposite_location }
   end
 
-  def edge_for(direction)
+  def edge_on(direction)
     edges.find{|edge|  edge.relative_location(orientation) == direction }
   end
 
@@ -31,21 +33,7 @@ class Card
     return edges unless placed?
 
     unoccupied_sides.map do |dir|
-      [dir, edge_for(dir)]
+      [dir, edge_on(dir)]
     end.to_h
-  end
-
-  def unoccupied_sides
-    return Direction.all unless placed?
-
-    neighbors.compact.select{|k, v| v.unoccupied? }.keys
-  end
-
-  def neighbors
-    location.neighbors
-  end
-
-  def placed?
-    !location.nil?
   end
 end
