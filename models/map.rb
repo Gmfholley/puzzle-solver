@@ -27,4 +27,18 @@ class Map
     location.place(occupant, orientation)
     true
   end
+
+  def to_s
+    locations.sort_by(&:x_pos)
+      .reverse
+      .group_by { |loc| loc.x_pos }
+      .map do |row, locs|
+        sets_of_rows = locs.sort_by { |loc| loc.y_pos }.map { |loc| loc.to_s }
+        num_rows = sets_of_rows.first.length
+
+        (0...num_rows).to_a.map { |i|
+          sets_of_rows.map { |loc_row| loc_row[i] }.join(" | ")
+        }.join("\n")
+      end
+  end
 end

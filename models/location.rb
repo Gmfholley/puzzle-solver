@@ -43,7 +43,21 @@ class Location
     !map.find(x_pos, y_pos).nil?
   end
 
+  def ==(other_obj)
+    x_pos == other_obj.x_pos && y_pos == other_obj.y_pos
+  end
+
+  def to_s
+    return occupant.to_s if occupied?
+
+    ["     ", "  #{first_char}  ", "     "]
+  end
+
   private
+
+  def first_char
+    name[0].upcase
+  end
 
   def directions
     map.directions

@@ -19,4 +19,8 @@ class Edge
   def ==(other_obj)
     image == other_obj.image
   end
+
+  def to_s
+    image.to_s
+  end
 end

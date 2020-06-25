@@ -29,4 +29,20 @@ class HalfImage
   def ==(other_obj)
     name == other_obj.name && position == other_obj.position
   end
+
+  def to_s
+    first_char.send(position_case)
+  end
+
+  private
+
+  def first_char
+    name[0]
+  end
+
+  def position_case
+    return :upcase if position == :top
+
+    :downcase
+  end
 end
