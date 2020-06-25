@@ -21,6 +21,10 @@ class Occupant
     !location.nil?
   end
 
+  def unplaced?
+    !placed?
+  end
+
   def unoccupied_sides
     return Direction.all unless placed?
 

@@ -2,6 +2,7 @@
 
 module Locations
   # Returns locations in order between the two, from 1 to 2
+  # Note, if the center  of your maps is not 0, 0, the math in here is not right
   class Arc
     attr_reader :location1, :location2, :map
 
@@ -18,7 +19,7 @@ module Locations
       y_locations = y_moves(start)
 
       # Move in x direction, starting from last y move
-      continue = y_locations.last
+      continue = y_locations.compact.last
       x_locations = x_moves(continue)
 
       [start, *y_locations, *x_locations].compact
