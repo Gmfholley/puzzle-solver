@@ -28,6 +28,14 @@ module Locations
       assert_equal [@location1, @location3, @location2].map(&:name), subject.map(&:name)
     end
 
+    def test_should_include_right_top_corner_in_other_order
+      @location1 = @locations.find { |loc| loc.name == :east }
+      @location2 = @locations.find { |loc| loc.name == :north }
+      @location3 = @locations.find { |loc| loc.name == :north_east }
+
+      assert_equal [@location1, @location3, @location2].map(&:name), subject.map(&:name)
+    end
+
     def test_should_include_left_top_corner
       @location1 = @locations.find { |loc| loc.name == :north }
       @location2 = @locations.find { |loc| loc.name == :west }

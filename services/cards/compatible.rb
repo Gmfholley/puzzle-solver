@@ -15,7 +15,7 @@ module Cards
       available_cards.flat_map do |potential_card|
         Direction.all.map do |potential_direction|
           potential_card.orientation = potential_direction
-          PotentialNeighbor.new(potential_card, potential_direction) if card.edges_match?(potential_card, direction)
+          Option.new(potential_card, potential_direction) if card.edges_match?(potential_card, direction)
         end.compact
       end
     end

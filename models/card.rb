@@ -46,6 +46,6 @@ class Card < Occupant
   def to_s
     sorted_edges = edges.sort_by { |e| e.relative_location(orientation).value }
 
-    ["  #{sorted_edges[0]}  ", "#{sorted_edges[1]}   #{sorted_edges[2]}", "  #{sorted_edges[3]}  "]
+    ["  #{sorted_edges[0]}  ", "#{sorted_edges[3]}   #{sorted_edges[1]}", "  #{sorted_edges[2]}  "]
   end
 end

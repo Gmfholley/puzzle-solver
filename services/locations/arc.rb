@@ -15,24 +15,29 @@ module Locations
     def perform
       start = location1
 
-      # Move in y direction, starting from location1
-      y_locations = y_moves(start)
+      locations = path.flat_map { |dir, diff|
+        dir_locations = move_in(start, diff, dir)
+        start = dir_locations.compact.last
+        dir_locations
+      }
 
-      # Move in x direction, starting from last y move
-      continue = y_locations.compact.last
-      x_locations = x_moves(continue)
-
-      [start, *y_locations, *x_locations].compact
+      [location1, *locations].compact
     end
 
     private
 
-    def y_moves(from)
-      range_of_moves(y_diff).map { |i| move(from.x_pos, i + from.y_pos) }
+    def move_in(from, to, dir = :x)
+      range_of_moves(to).map { |i|
+        xd = dir == :x ? i : 0
+        yd = dir == :y ? i : 0
+        move(from.x_pos + xd, from.y_pos + yd)
+      }
     end
 
-    def x_moves(from)
-      range_of_moves(x_diff).map { |i| move(i + from.x_pos, from.y_pos) }
+    def path
+      {x: x_diff, y: y_diff}.sort_by { |dir, diff|
+        (diff + location1.send("#{dir}_pos")).abs
+      }.reverse.to_h
     end
 
     def range_of_moves(up_to)

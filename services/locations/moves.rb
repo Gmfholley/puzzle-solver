@@ -10,6 +10,8 @@ module Locations
     end
 
     def perform
+      puts "moves: #{moves.map(&:potential_neighbors).map(&:length)}"
+
       moves
     end
 

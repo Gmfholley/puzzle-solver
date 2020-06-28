@@ -15,13 +15,19 @@ class Location
     !occupant.nil?
   end
 
+  def unoccupied?
+    !occupied?
+  end
+
   def place(occupant, orientation)
     occupant.place(self, orientation)
     @occupant = occupant
   end
 
   def clear
-    occupant.clear
+    return unless @occupant
+
+    @occupant.clear
     @occupant = nil
   end
 

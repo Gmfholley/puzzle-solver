@@ -13,13 +13,24 @@ class Solver
   def perform
     @card_index = 0
 
-    while (unsolved? || unfinished?) do
+    while (unsolved? && unfinished?) do
+      puts "----------Card #{card_index + 1}------------"
+      map.locations.each(&:clear)
+      cards.each(&:clear)
       place_card_in_center
 
-      solve_for_card
+      success = solve_for_card
 
-      card_index += 1
+      @card_index += 1
     end
+
+    if success
+      puts "----------SOLVED------------"
+      puts "----------Card #{card_index}------------"
+      puts map.to_s
+    end
+
+    success
   end
 
   private
@@ -33,46 +44,19 @@ class Solver
   end
 
   def unfinished?
-    card_index >= cards.length
+    @card_index < cards.length
   end
 
   def card
-    cards[card_index]
+    cards[@card_index]
   end
 
   def place_card_in_center
+    center.clear
     center.place(card, card.orientation)
   end
 
   def solve_for_card
-    loc = center
-    moves = loc.neighbors.compact.map do |direction, location|
-      potential_neighbors = Cards::Compatible.new(card, cards, direction).perform
-      Cards::PotentialMoves.new(card, direction, potential_neighbors)
-    end
-
-    first_move = moves.min_by { |move| move.potential_neighbors.length }
-    adjacent_moves = moves.select { |move| (move.direction.value - first_move.direction.value).abs == 1 }
-    second_move = adjacent_moves.min_by { |move| move.potential_neighbors.length }
-
-    locations = Locations::Arc.new(first_move.to_location, second_move.to_location).perform
-    binding.pry
-    c = next_move(first_move)
-    val = c.neighbors.find { |_dir, location| location == locations[1] }
-    dir = val.first
-    neighbors = Cards::Compatible.new(c, dir, cards)
-    c_moves = Cards::PotentialMoves.new(c, dir, neighbors)
-    next_move(c_moves)
-
-  end
-
-  def next_move(move)
-    return false if move.untried_neighbors.none?
-
-    neighbor = move.untried_neighbors.first
-    neighbor.mark
-    location = move.to_location
-    location.place(neighbor.card, neighbor.orientation)
-    return neighbor.card
+    FirstTry.new(center, cards).perform
   end
 end

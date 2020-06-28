@@ -14,7 +14,7 @@ module Cards
       potential_neighbors.reject(&:tried?)
     end
 
-    def to_location
+    def in_direction
       card.location.neighbor(direction)
     end
   }

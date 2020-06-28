@@ -213,4 +213,49 @@ LOCATIONS_FIVE = [
   }
 ]
 
+CARDS_TEST = [
+  {
+    north: {name: :orange_tabby, position: :top},
+    east: {name: :orange_tabby, position: :top},
+    south: {name: :orange_tabby, position: :top},
+    west: {name: :orange_tabby, position: :top}
+  },
+  {
+    north: {name: :gray, position: :top},
+    east: {name: :gray, position: :top},
+    south: {name: :gray, position: :top},
+    west: {name: :gray, position: :top}
+  },
+  {
+    north: {name: :calico, position: :top},
+    east: {name: :calico, position: :top},
+    south: {name: :calico, position: :top},
+    west: {name: :calico, position: :top}
+  },
+  {
+    north: {name: :siamese, position: :top},
+    east: {name: :siamese, position: :top},
+    south: {name: :siamese, position: :top},
+    west: {name: :siamese, position: :top}
+  },
+  {
+    north: {name: :orange_tabby, position: :bottom},
+    east: {name: :gray, position: :bottom},
+    south: {name: :calico, position: :bottom},
+    west: {name: :siamese, position: :bottom}
+  },
+  {
+    north: {name: :calico, position: :bottom},
+    east: {name: :siamese, position: :bottom},
+    south: {name: :orange_tabby, position: :bottom},
+    west: {name: :gray, position: :bottom}
+  },
+  {
+    north: {name: :orange_tabby, position: :bottom},
+    east: {name: :gray, position: :bottom},
+    south: {name: :calico, position: :bottom},
+    west: {name: :siamese, position: :top}
+  }
+]
+
 Direction.set_all(DIRECTIONS.map { |attrs| Direction.new(attrs) })

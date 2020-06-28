@@ -30,7 +30,7 @@ module Cards
     end
 
     def equivalent_edges
-      @equivalent_edges ||= card.edges.map { |edge| [edge, other_card.edges.find { |edge| edge == e }] }.to_h
+      @equivalent_edges ||= card.edges.map { |edge| [edge, other_card.edges.find { |e| edge == e }] }.to_h
     end
   }
 end

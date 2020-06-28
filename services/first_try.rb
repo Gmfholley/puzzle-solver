@@ -3,6 +3,7 @@
 # A card has been placed in the center location
 # Try to fill in the other cards
 class FirstTry
+  attr_reader :center, :cards
   def initialize(center, cards)
     @center = center
     @map = center.map
@@ -10,18 +11,35 @@ class FirstTry
   end
 
   def perform
-    locations = Locations::Arc.new(first_move.to_location, second_move.to_location).perform
+    puts "Moves:  #{moves.length}"
+    puts "first_move.potential_neighbors.length: #{first_move.potential_neighbors.length}"
+# 
+    # Locations::Next.new(0, locations, cards).perform
+    success = try
+    # success = Try.new(first_move.in_direction, second_move.in_direction, cards).perform
 
+    puts @map.to_s
 
-    c = next_move(first _move)  
-    val = c.neighbors.find { |_dir, location| location == locations[1] }
-    dir = val.first
-    neighbors = Cards::Compatible.new(c, dir, cards)
-    c_moves = Cards::PotentialMoves.new(c, dir, neighbors)
-    next_move(c_moves)
+    success
   end
 
   private
+
+  def try
+    binding.pry if locations.select(&:unoccupied?).length != 8
+    Locations::Next.new(0, locations.select(&:unoccupied?), cards).perform
+  end
+
+  def locations
+    [
+      *locations_for(first_move.in_direction, second_move.in_direction),
+      *remaining_move_sets.flat_map { |move_set| locations_for(move_set.first.in_direction, move_set[1].in_direction) }
+    ].uniq
+  end
+
+  def locations_for(from_location, to_location)
+    Locations::Arc.new(from_location, to_location).perform
+  end
 
   def moves
     @moves ||= Locations::Moves.new(center, cards).perform
@@ -32,24 +50,45 @@ class FirstTry
   end
 
   def second_move
-    @second_move ||= min_move(adjacent_moves(first_move))
+    @second_move ||= min_move(adjacent_moves(first_move, moves))
   end
 
   def min_move(moves)
     moves.min_by { |move| move.potential_neighbors.length }
   end
 
-  def adjacent_moves(move)
-    moves.select { |m| (m.direction.value - move.direction.value).abs == 1 }
+  def num_directions
+    @map.directions.length
   end
 
-  def next_move(move)
-    return false if move.untried_neighbors.none?
+  def adjacent_moves(move, moves)
+    moves.select { |m| (m.direction.value - move.direction.value).abs == 1 || (num_directions - move.direction.value - m.direction.value).abs == 1 }
+  end
 
-    neighbor = move.untried_neighbors.first
-    neighbor.mark
-    location = move.to_location
-    location.place(neighbor.card, neighbor.orientation)
-    return neighbor.card
+  def remaining_move_sets
+    [
+      remaining_first_set,
+      *remaining_moves.map.with_index { |move, i| [move, remaining_moves[i + 1]] }[0...-1],
+      last_set_to_first
+    ]
+  end
+
+  def remaining_first_set
+    [adjacent_moves(remaining_moves.first, [first_move, second_move]).first, remaining_moves.first]
+  end
+
+  def last_set_to_first
+    [remaining_moves.last, first_move]
+  end
+
+  def descending_order?
+    first_move_value = first_move.direction.value.zero? ? @map.directions.length : first_move.direction.value
+    second_move_value = second_move.direction.value.zero? ? @map.directions.length : second_move.direction.value
+
+    (first_move_value - second_move_value).positive?
+  end
+
+  def remaining_moves
+    @remaining_moves ||= moves.reject { |move| [first_move, second_move].include? move }.sort_by { |move| move.direction.value * (descending_order? ? 1 : -1) }
   end
 end
