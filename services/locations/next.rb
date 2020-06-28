@@ -51,7 +51,7 @@ module Locations
     end
 
     def next_moves
-      @next_moves ||= Locations::PotentialCards.new(location, cards).perform
+      @next_moves ||= Locations::Cards::Potential.new(location, cards).perform
     end
 
     def next_location

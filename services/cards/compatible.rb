@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module Cards
-  # Returns cards compatible with the card in the direction
+  # Returns cards compatible with card in the direction
+  # From the perspective of the occupied location (card's location) looking out at its neighbors
   Compatible = Struct.new(:card, :cards, :direction) {
     def perform
       return [] unless card.placed?
@@ -13,11 +14,14 @@ module Cards
 
     def potential_neighbors
       available_cards.flat_map do |potential_card|
-        Direction.all.map do |potential_direction|
-          potential_card.orientation = potential_direction
-          Option.new(potential_card, potential_direction) if card.edges_match?(potential_card, direction)
-        end.compact
+        orientations.map { |orientation|
+          Cards::Neighbors::Compatible.new(potential_card, orientation, card.location, direction.opposite).perform
+        }.compact
       end
+    end
+
+    def orientations
+      card.location.map.directions
     end
 
     def available_cards

@@ -45,6 +45,10 @@ class Location
     }.to_h
   end
 
+  def directions
+    map.directions
+  end
+
   def valid?
     !map.find(x_pos, y_pos).nil?
   end
@@ -54,20 +58,10 @@ class Location
   end
 
   def to_s
-    return occupant.to_s if occupied?
-
-    ["     ", "  #{first_char}  ", "     "]
+    Locations::ToString.new(self).perform
   end
 
   private
-
-  def first_char
-    name[0].upcase
-  end
-
-  def directions
-    map.directions
-  end
 
   def find_neighbor(direction)
     map.find(x_pos + direction.x_move, y_pos + direction.y_move)

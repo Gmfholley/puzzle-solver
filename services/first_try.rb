@@ -42,7 +42,7 @@ class FirstTry
   end
 
   def moves
-    @moves ||= Locations::Moves.new(center, cards).perform
+    @moves ||= Locations::Moves::Potential.new(center, cards).perform
   end
 
   def first_move
