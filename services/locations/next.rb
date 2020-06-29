@@ -26,7 +26,6 @@ module Locations
     private
 
     def clear_location
-      cards.find { |c| location&.occupant == c }&.clear
       location.clear
     end
 
@@ -40,7 +39,7 @@ module Locations
       log_info
 
       while next_moves.any?(&:unmarked?) && locations.any?(&:unoccupied?)
-        location.clear
+        clear_location
         move(next_moves.shift)
         next_location
       end

@@ -29,7 +29,8 @@ module Locations
     end
 
     def log_end
-      logger.info "End of Tries for Location: success = #{@success}"
+      logger.info "End of Tries for Card at #{location.name}: success = #{@success}"
+      logger.info "Maximum number placed = #{@map.ever_placed}"
       logger.info { "Map: \n#{@map.to_s.join("\n")}" }
     end
 

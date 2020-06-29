@@ -22,6 +22,7 @@ class Location
   def place(occupant, orientation)
     occupant.place(self, orientation)
     @occupant = occupant
+    map.ever_placed = [@map.ever_placed, @map.locations.count(&:occupied?)].max
   end
 
   def clear

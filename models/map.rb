@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class Map
-  attr_accessor :locations, :directions
+  attr_accessor :locations, :directions, :ever_placed
   def initialize(locations = [], directions = [])
     @locations = locations
     locations.each { |loc| loc.map = self }
     @directions = directions
+    @ever_placed = 0
   end
 
   def valid?
@@ -17,7 +18,6 @@ class Map
   end
 
   def clear(location)
-    location.occupant.clear
     location.clear
   end
 
