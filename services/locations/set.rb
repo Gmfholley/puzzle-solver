@@ -40,7 +40,7 @@ module Locations
     end
 
     def min_move(moves)
-      moves.min_by { |move| move.potential_neighbors.length }
+      moves.min_by { |move| move.options.length }
     end
 
     def num_directions

@@ -11,7 +11,11 @@ module Locations
     def perform
       return occupant.to_s if occupied?
 
-      ["     ", "  #{abbreviation}  ", "     "]
+      [
+        "     ",
+        "  #{abbreviation}  "[0, 5],
+        "     "
+      ]
     end
 
     private

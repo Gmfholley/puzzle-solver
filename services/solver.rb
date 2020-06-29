@@ -57,6 +57,6 @@ class Solver
   end
 
   def solve_for_card
-    FirstTry.new(center, cards).perform
+    Locations::Solve.new(center, cards).perform
   end
 end

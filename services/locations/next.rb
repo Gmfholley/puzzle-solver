@@ -25,7 +25,7 @@ module Locations
     private
 
     def clear_location
-      cards.find { |c| location&.occupant && location&.occupant == c }&.clear
+      cards.find { |c| location&.occupant == c }&.clear
       location.clear
     end
 
@@ -36,12 +36,14 @@ module Locations
     def make_moves
       return next_location if location.occupied?
 
-      puts "Unmarked for #{location.name}: #{next_moves.select(&:unmarked?).length}"
-      puts "location_index: #{location_index}"
-      puts "num_locations: #{locations.length}"
+      puts "Unmarked moves to #{location.name}: #{next_moves.count(&:unmarked?)}"
+      puts "Location_index: #{location_index}"
+      puts "Num_locations: #{locations.length}"
+      puts "Cards placed: #{cards.count(&:placed?)}"
+      puts location.map.to_s
       while next_moves.any?(&:unmarked?) && locations.any?(&:unoccupied?)
+        location.clear
         move(next_moves.shift)
-        puts location.map.to_s
         next_location
       end
     end
@@ -59,8 +61,7 @@ module Locations
     end
 
     def move(move)
-      move.mark
-      location.place(move.card, move.orientation)
+      move.to(location)
     end
   end
 end

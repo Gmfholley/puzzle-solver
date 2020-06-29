@@ -1,0 +1,51 @@
+# frozen_string_literal: true
+
+module Locations
+  # Solve given location as starting point
+  class Solve
+    attr_reader :location, :cards
+    def initialize(location, cards)
+      @location = location
+      @map = location.map
+      @cards = cards
+    end
+
+    def perform
+      puts "Moves:  #{moves.length}"
+      puts "cards.placed.length: #{cards.count(&:placed?)}"
+
+      success = try
+
+      puts "End of Tries for Location: success = #{success}"
+      puts @map.to_s
+
+      success
+    end
+
+    private
+
+    def try
+      Locations::Next.new(0, locations.select(&:unoccupied?), cards).perform
+    end
+
+    def locations
+      move_sets.flat_map { |move_set|
+        move_from = move_set.first
+        move_to = move_set.last
+        locations_for(move_from.in_direction, move_to.in_direction)
+      }.uniq
+    end
+
+    def locations_for(from_location, to_location)
+      Locations::Arc.new(from_location, to_location).perform
+    end
+
+    def move_sets
+      Locations::Moves::Sets.new(moves, @map).perform
+    end
+
+    def moves
+      @moves ||= Locations::Moves::Potential.new(location, cards).perform
+    end
+  end
+end

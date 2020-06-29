@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Cards
-  Moves = Struct.new(:card, :direction, :potential_neighbors) {
+  Move = Struct.new(:card, :direction, :options) {
     def tried?
       @tried
     end
@@ -11,11 +11,15 @@ module Cards
     end
 
     def untried_neighbors
-      potential_neighbors.reject(&:tried?)
+      options.reject(&:tried?)
     end
 
     def direction_value
       direction.value
+    end
+
+    def distance_from(move)
+      direction_value - move.direction_value
     end
 
     def in_direction

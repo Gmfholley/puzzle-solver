@@ -4,10 +4,12 @@ module Locations
   module Moves
     # Return array of Adjacent moves to location
     class Adjacent
-      attr_reader :moves, :move
-      def initialize(moves, move)
+      attr_reader :moves, :move, :distance
+      def initialize(moves, move, map, distance = 1)
         @moves = moves
         @move = move
+        @map = map
+        @distance = distance
       end
 
       def perform
@@ -21,7 +23,13 @@ module Locations
       end
 
       def adjacent_moves
-        moves.select { |m| (m.direction.value - move.direction.value).abs == 1 || (num_directions - move.direction.value - m.direction.value).abs == 1 }
+        moves.select do |m|
+          move_diff(m, move).abs == distance || (num_directions - move_diff(m, move)) == distance
+        end
+      end
+
+      def move_diff(move1, move2)
+        move1.distance_from(move2).abs
       end
     end
   end

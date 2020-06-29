@@ -11,7 +11,7 @@ module Locations
       end
 
       def perform
-        puts "moves: #{moves.map(&:potential_neighbors).map(&:length)}"
+        puts "moves: #{moves.map(&:options).map(&:length)}"
 
         moves
       end
@@ -24,8 +24,8 @@ module Locations
 
       def moves
         location.neighbors.compact.map do |direction, location|
-          potential_neighbors = ::Cards::Compatible.new(card, cards, direction).perform
-          ::Cards::Moves.new(card, direction, potential_neighbors)
+          options = ::Cards::Compatible.new(card, cards, direction).perform
+          ::Cards::Move.new(card, direction, options)
         end
       end
     end
