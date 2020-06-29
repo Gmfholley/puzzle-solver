@@ -1,19 +1,16 @@
+Map has many locations.
 
+Location belongs to a Map.
 
-Map has many locations
-Location belongs to a Map
-Location has x, y, occupant
+Location has x, y, occupant.
 
+Card has many edges and can be assigned to (belongs to) a Location.
 
+Card Location belongs to a location and a map.
 
+Card has an orientation.
 
-Card has many edges
-  and can be assigned to (belongs to) a Location
-Card Location belongs to a location and a map
-Card has an orientation
-
-
-Edge belongs to an image and an image location
+Edge belongs to an image and an image location.
 
 1. Find center location
 1. Place a card there (starting in order of ranking)
@@ -22,8 +19,17 @@ Edge belongs to an image and an image location
 1. Pick adjacent one with least number of compatible options
 1. Alternate in each direction in an arc
 
-   Arc
-   X  X  X
-   X     X
-X  X  X  X
+
+```
+   S = start of arc
+   E = end of arc
+   C = center
+   Arc = -- |
+   X = other positions
+
+
+   S  -  -
+   X  X  |
+X  C  X  E
    X
+```

@@ -59,3 +59,12 @@ Run a test by running it as a ruby file:
 $ ruby test/path/to/my_test.rb
 => Test results
 ```
+
+# TODO
+
+- [ ] Expand Solver to work for more than one set out of moves
+- [ ] Create result object
+- [ ] Update adjacent so it works in case values are 1/2 values or less than or equal to 1
+- [ ] Add map to_s service
+- [ ] Add tests
+
