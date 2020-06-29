@@ -12,18 +12,26 @@ module Locations
     end
 
     def perform
-      logger.info "Moves:  #{moves.length}"
-      logger.info "cards.placed.length: #{cards.count(&:placed?)}"
+      log_start
 
-      success = try
+      @success = try
 
-      logger.info "End of Tries for Location: success = #{success}"
-      logger.info { "Map: \n#{@map.to_s.join("\n")}" }
+      log_end
 
-      success
+      @success
     end
 
     private
+
+    def log_start
+      logger.info "Moves:  #{moves.length}"
+      logger.info "cards.placed.length: #{cards.count(&:placed?)}"
+    end
+
+    def log_end
+      logger.info "End of Tries for Location: success = #{@success}"
+      logger.info { "Map: \n#{@map.to_s.join("\n")}" }
+    end
 
     def try
       Locations::Next.new(0, locations.select(&:unoccupied?), cards).perform

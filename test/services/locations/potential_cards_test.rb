@@ -3,10 +3,10 @@
 require_relative "../../test"
 
 module Locations
-  class PotentialCardsTest < Test::Unit::TestCase
+  class Cards::PotentialTest < Test::Unit::TestCase
     include Logging
     def subject
-      Locations::PotentialCards.new(@location, @cards).perform
+      Locations::Cards::Potential.new(@location, @cards).perform
     end
 
     def setup
@@ -57,11 +57,11 @@ module Locations
       @cards = Factories::Cards.perform(CARDS_TEST)
       (0..3).to_a.map { |i| @map.place(locations[i], @cards[i], Direction.north) }
 
-      logging.debug "show map"
+      logger.debug "show map"
       logger.debug { "Map: \n#{@map.to_s.join("\n")}" }
       subject.each do |s|
         s.card.orientation = s.orientation
-        logging.debug s.card.to_s
+        logger.debug s.card.to_s
       end
 
       assert_equal 2, subject.length
@@ -70,7 +70,7 @@ module Locations
     def test_requires_params
       @location = nil
       @cards = nil
-      assert_raise { subject }
+      assert_equal [], subject
     end
   end
 end

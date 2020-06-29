@@ -17,7 +17,6 @@ class Solver
     while (unsolved? && unfinished?) do
       logger.info "----------Card #{card_index + 1}------------"
       map.locations.each(&:clear)
-      cards.each(&:clear)
       place_card_in_center
 
       success = solve_for_card
