@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Solver
+  include Logging
   attr_accessor :card_index
   attr_reader :cards, :map
 
@@ -14,7 +15,7 @@ class Solver
     @card_index = 0
 
     while (unsolved? && unfinished?) do
-      puts "----------Card #{card_index + 1}------------"
+      logger.info "----------Card #{card_index + 1}------------"
       map.locations.each(&:clear)
       cards.each(&:clear)
       place_card_in_center
@@ -25,9 +26,9 @@ class Solver
     end
 
     if success
-      puts "----------SOLVED------------"
-      puts "----------Card #{card_index}------------"
-      puts map.to_s
+      logger.info "----------SOLVED------------"
+      logger.info "----------Card #{card_index}------------"
+      logger.info { "Map: \n#{map.to_s.join("\n")}" }
     end
 
     success

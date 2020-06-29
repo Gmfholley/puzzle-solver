@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Force
+  include Logging
   attr_accessor :card_index
   attr_reader :cards, :map, :locations
 
@@ -25,7 +26,7 @@ class Force
         locations[i].place(option.card, option.orientation)
       end
 
-      puts @map.to_s
+      logger.info { "Map: \n#{@map.to_s.join("\n")}" }
 
       solved = locations.map(&:card).all? { |card| card.neighbors.compact.all? { |dir, loc| card.edges_match?(loc.card, dir) } }
       set_index += 1

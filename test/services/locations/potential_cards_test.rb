@@ -4,6 +4,7 @@ require_relative "../../test"
 
 module Locations
   class PotentialCardsTest < Test::Unit::TestCase
+    include Logging
     def subject
       Locations::PotentialCards.new(@location, @cards).perform
     end
@@ -56,11 +57,11 @@ module Locations
       @cards = Factories::Cards.perform(CARDS_TEST)
       (0..3).to_a.map { |i| @map.place(locations[i], @cards[i], Direction.north) }
 
-      puts "show map"
-      puts @map.to_s
+      logging.debug "show map"
+      logger.debug { "Map: \n#{@map.to_s.join("\n")}" }
       subject.each do |s|
         s.card.orientation = s.orientation
-        puts s.card.to_s
+        logging.debug s.card.to_s
       end
 
       assert_equal 2, subject.length

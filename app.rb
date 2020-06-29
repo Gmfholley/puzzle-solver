@@ -1,4 +1,5 @@
 require "pry"
+Dir[File.join(__dir__, "config", "*.rb")].sort.each { |file| require file }
 Dir[File.join(__dir__, "models", "*.rb")].sort.each { |file| require file }
 Dir[File.join(__dir__, "services", "/**/*.rb")].sort.each { |file| require file }
 

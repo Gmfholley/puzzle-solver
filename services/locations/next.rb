@@ -3,6 +3,7 @@
 module Locations
   # Recursively places next location given cards
   class Next
+    include Logging
     attr_reader :location_index, :locations, :cards
 
     def initialize(location_index, locations, cards)
@@ -36,16 +37,21 @@ module Locations
     def make_moves
       return next_location if location.occupied?
 
-      puts "Unmarked moves to #{location.name}: #{next_moves.count(&:unmarked?)}"
-      puts "Location_index: #{location_index}"
-      puts "Num_locations: #{locations.length}"
-      puts "Cards placed: #{cards.count(&:placed?)}"
-      puts location.map.to_s
+      log_info
+
       while next_moves.any?(&:unmarked?) && locations.any?(&:unoccupied?)
         location.clear
         move(next_moves.shift)
         next_location
       end
+    end
+
+    def log_info
+      logger.info "Unmarked moves to #{location.name}: #{next_moves.count(&:unmarked?)}"
+      logger.info "Location_index: #{location_index}"
+      logger.info "Num_locations: #{locations.length}"
+      logger.info "Cards placed: #{cards.count(&:placed?)}"
+      logger.info { "Map: \n#{location.map.to_s.join("\n")}" }
     end
 
     def location

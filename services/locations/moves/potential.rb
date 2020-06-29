@@ -11,8 +11,6 @@ module Locations
       end
 
       def perform
-        puts "moves: #{moves.map(&:options).map(&:length)}"
-
         moves
       end
 

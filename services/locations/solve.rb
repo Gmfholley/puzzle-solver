@@ -3,6 +3,7 @@
 module Locations
   # Solve given location as starting point
   class Solve
+    include Logging
     attr_reader :location, :cards
     def initialize(location, cards)
       @location = location
@@ -11,13 +12,13 @@ module Locations
     end
 
     def perform
-      puts "Moves:  #{moves.length}"
-      puts "cards.placed.length: #{cards.count(&:placed?)}"
+      logger.info "Moves:  #{moves.length}"
+      logger.info "cards.placed.length: #{cards.count(&:placed?)}"
 
       success = try
 
-      puts "End of Tries for Location: success = #{success}"
-      puts @map.to_s
+      logger.info "End of Tries for Location: success = #{success}"
+      logger.info { "Map: \n#{@map.to_s.join("\n")}" }
 
       success
     end
