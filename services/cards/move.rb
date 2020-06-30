@@ -2,14 +2,6 @@
 
 module Cards
   Move = Struct.new(:card, :direction, :options) {
-    def tried?
-      @tried
-    end
-
-    def mark
-      @tried = true
-    end
-
     def untried_neighbors
       options.reject(&:tried?)
     end
