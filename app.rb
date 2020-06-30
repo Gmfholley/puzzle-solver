@@ -140,5 +140,6 @@ locations = LOCATIONS.map { |i| Location.new(i) }
 map = Map.new(locations, Direction.all)
 
 cards = Factories::Cards.perform(CARDS)
-
+# Entry point
+# Solver.new(map, cards).perform
 binding.pry
