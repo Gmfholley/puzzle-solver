@@ -29,46 +29,46 @@ It can also solve more generic puzzles.
 It solves the placement of n cards on a map of defined tesselating shapes, where the cards have half of an image on each edge, either the top or bottom half.
 
 ```
- /⎻d⎻\ d d /
-/D   D\_d_/
-\d   d/ D \
- \_d_/D   d\
+ /⎻d⎻\\d   d/
+/D   D\\_d_/
+\d   d//⎻D⎻\
+ \_d_//D   d\
 
 # Hexagonal tesselations
 
 
-      /⎻⎻⎻\
-     /     \
- /⎻⎻⎻\     /⎻⎻⎻\
-/     \___/     \
-\     /   \     /
- \___/     \___/
- /   \     /   \
-/     \___/     \
-\     /   \     /
- \___/     \___/
-     \     /
-      \___/
+       /⎻⎻⎻\
+      /     \
+ /⎻⎻⎻\\  N  //⎻⎻⎻\
+/     \\___//     \
+\  NW //⎻⎻⎻\\  NE /
+ \___//     \\___/
+ /⎻⎻⎻\\  C  //⎻⎻⎻\
+/     \\___//     \
+\  SW //⎻⎻⎻\\ SE  /
+ \___//     \\___/
+      \  S  /
+       \___/
 
 
 # Triangular tesselations
 
 
-\⎻G⎻⎻/\⎻⎻H⎻/
- \so/OO\og/
-  \/_d__\/
-   \ D  /
-    \dd/
-     \/
+\⎻G⎻⎻//\\⎻⎻H⎻/
+ \so//OO\\og/
+  \//_d__\\/
+    \ D  /
+     \dd/
+      \/
 
 
 
-\⎻⎻⎻⎻/\⎻⎻⎻⎻/
- \  /  \  /
-  \/____\/
-   \    /
-    \  /
-     \/
+\⎻⎻⎻⎻//\\⎻⎻⎻⎻/
+ \  //  \\  /
+  \//____\\/
+    \⎻⎻⎻⎻/
+     \  /
+      \/
 ```
 
 
